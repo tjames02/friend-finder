@@ -152,31 +152,29 @@ var questions = [
       
     };
 
-    console.log(newFriend);
-
+    
     // This line is the magic. It"s very similar to the standard ajax function we used.
     // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
     // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
     // depending on if a tables is available or not.
 
-    $.post("/api/tables", newReservation,
+    $.post("/api/friends", newFriend,
       function(data) {
 
-        // If a table is available... tell user they are booked.
+        // If there's a match... tell the user.
         if (data) {
-          alert("Yay! You are officially booked!");
+          alert("Yay! You matched with a friend!");
         }
 
-        // If a table is available... tell user they on the waiting list.
+        // If there's not a match.. tell the user.
         else {
-          alert("Sorry you are on the wait list");
+          alert("Sorry you are not a match to anyone!");
         }
 
         // Clear the form when submitting
         $("#name").val("");
         $("#photo").val("");
-        $("#reserve-email").val("");
-        $("#reserve-unique-id").val("");
+        
 
       });
 
@@ -197,12 +195,15 @@ var questions = [
     var questionNum = $("<h4>").text("Question "+ obj.questionNum);
     var actualquestion = $("<label for='questionNum'>").text(obj.question);
     var select = $("<select>").attr('class', "custom-select");
+        select.attr("id", "qselect-" + obj.questionNum);
         var options = $("<option>").text("Select an Option");
     var aOption = $("<option>").text("1 (Stongly Disagree)");
     var bOption = $("<option>").text("2");
     var cOption = $("<option>").text("3");
     var dOption = $("<option>").text("4");
     var eOption = $("<option>").text("5 (Stongly Agree)");
+
+        //$('#qselect-3').find(':selected').val();
     
                 
               
