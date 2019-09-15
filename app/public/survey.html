@@ -55,17 +55,17 @@
               </div>
               <div class ="surveyQuestions">
               <div class="form-group">
-                <h4>Question 1</h4>
-                <label for="question1">Your mind is always buzzing with unexplored ideas and plans.</label>
+                <!-- <h4>Question 1</h4>
+                <label for="question1">Your mind is always buzzing with unexplored ideas and plans.</label> -->
                 
-                <select class="custom-select" id="question1">
+                <!-- <select class="custom-select" id="question1">
                     <option selected>Select an Option</option>
                     <option value="1">1 (Strongly Disagree)</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5 (Strongly Agree)</option>
-                  </select>
+                  </select> -->
               </div>
               </div>
                   
@@ -140,19 +140,25 @@ var questions = [
   // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
   // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
   // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
-
+var scoresArray = [];
   $(".submit").on("click", function(event) {
     event.preventDefault();
+    for (i =1; i<(questions.length+1); i++){
+      qSelect = "#qselect-"+i;
+      scoresArray.push($(qSelect).find(':selected').val());
+
+    };
 
     // Here we grab the form elements
     var newFriend = {
       name: $("#name").val().trim(),
       photo: $("#photo").val().trim(),
-    
+      scores: scoresArray
+      
       
     };
 
-    
+    console.log(scoresArray);
     // This line is the magic. It"s very similar to the standard ajax function we used.
     // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
     // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
@@ -174,6 +180,7 @@ var questions = [
         // Clear the form when submitting
         $("#name").val("");
         $("#photo").val("");
+        scoresArray = [];
         
 
       });
@@ -203,7 +210,7 @@ var questions = [
     var dOption = $("<option>").text("4");
     var eOption = $("<option>").text("5 (Stongly Agree)");
 
-        //$('#qselect-3').find(':selected').val();
+        // console.log($('#qselect-3').find(':selected').val());
     
                 
               
