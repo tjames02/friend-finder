@@ -34,13 +34,35 @@ module.exports = function(app) {
     // Note the code here. The "server" will respond to requests and let users know if they have a friend match or not.
     // It will do this by sending out the value "true" have a friend
     // req.body is available since I'm using the body parsing middleware
+    var newFriend = req.body; 
+    var friendScore = newFriend.scores; 
+    var matchName = "";
+    var matchImage = "";
+    var totalDifference = 0; 
+
+    for (var i = 0; i<data.length; i++){
+      var diff = 100; 
+      for (var j=0; j<friendScore.length; j++){
+        diff += Math.abs(data[i].scores[j]-friendScore[j]);
+      }
+      if (diff<totalDifference){
+        totalDifference = diff; 
+        matchName = data[i].Name;
+        matchImage = data[i].photo;
+      }
+    }
+    
     if (data.length > 0) {
       data.push(req.body);
-      res.json(true);
+      res.json(
+        {ok: true, 
+        matchName: matchName, 
+        matchImage: matchImage}
+        );
     }
     else {
       data.push(req.body);
-      res.json(false);
+      res.json({ok: false});
     }
   });
 

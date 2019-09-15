@@ -21,6 +21,10 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/survey.html"));
   });
 
+  app.get("/friends", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/friends.html"));
+  });
+
   // If no matching route is found default to home
   app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/home.html"));
